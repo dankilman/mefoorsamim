@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+import ReactModal from 'react-modal'
 import {Box, Button, Card, Flex, Heading} from 'rebass'
 import {Input} from '@rebass/forms'
 import api from '../lib/api-client'
@@ -89,6 +90,7 @@ interface LobbyProps {
 
 function Lobby(props: LobbyProps) {
   const {gameID, queryPlayerName} = props
+  const [showHelpModal, setShowHelpModal] = useState(false)
   const [cookies, setCookie] = useCookies(['playerName'])
   const playerName = queryPlayerName || cookies.playerName || ''
   const setPlayerName = name => setCookie('playerName', name, {path: '/'})
@@ -117,12 +119,57 @@ function Lobby(props: LobbyProps) {
 
   fetchGameState(gameID, setGameState)
 
+  const rules = [
+    'Must be a real/fictive character: Not an object, a band name or a tv show for example.',
+    'Reasonably known: Character needs to be reasonably known within the group of people playing the game.',
+    'Shbira rule: If "Bira" is the current name, you can\'t say "Sounds like shbira".',
+    'AB rule: Cannot iterate letters until reaching the correct letter.',
+    'Bazaar rule: If a correct name was guessed right as the turn ends, it is a valid win.',
+  ]
+  const header = (
+    <Flex mt={10} flexWrap="wrap" width={1} justifyContent="flex-end">
+      <Button
+        onClick={() => setShowHelpModal(true)}
+      >
+        ?
+      </Button>
+      <ReactModal
+        isOpen={showHelpModal}
+        onRequestClose={() => setShowHelpModal(false)}
+        ariaHideApp={false}
+        style={{
+          content: {
+            width: '800px',
+            margin: '0 auto'
+          }
+        }}
+      >
+        <Flex width={1} flexWrap="wrap">
+          <Flex width={1} justifyContent="space-between">
+            <Heading>
+              Game Rules And Guidelines
+            </Heading>
+            <Button onClick={() => setShowHelpModal(false)}>X</Button>
+          </Flex>
+          <ul>
+            {rules.map((item, index) => {
+              return (
+                <li key={index}>{item}</li>
+              )
+            })}
+          </ul>
+        </Flex>
+      </ReactModal>
+    </Flex>
+  )
+
   return (
     <Flex
       width="800px"
       flexWrap="wrap"
       m="0 auto"
     >
+      {header}
       {showComponent}
     </Flex>
   )
