@@ -17,7 +17,7 @@ app.prepare().then(() => {
     ctx.respond = false
   })
   server.use(router.routes())
-  server.listen(port, async () => {
+  server.listen({port, host: '127.0.0.1'}, async () => {
     // hack to init ts module
     const url = '/api/init'
     const stub = () => {}
