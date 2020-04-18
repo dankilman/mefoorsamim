@@ -1,17 +1,17 @@
 import {ActivePlayers, TurnOrder} from 'boardgame.io/core'
 import {Ctx, Game} from 'boardgame.io'
-import mocks from './mocks'
+// import mocks from './mocks'
 
 const countdownSeconds = 30
 const countdown = countdownSeconds * 1000
 const numNamesPerPlayer = 20
 
 type StartPhase = 'naming' | 'playing' | 'pairing'
-const startPhase: StartPhase = 'playing' as StartPhase
+const startPhase: StartPhase = 'pairing' as StartPhase
 
 // const startState = mocks.initialNamingState
-const startState = mocks.initialStatePlaying
-// const startState = undefined
+// const startState = mocks.initialStatePlaying
+const startState = undefined
 
 
 interface State {
@@ -29,14 +29,14 @@ interface State {
   countdownLeft?: number
 }
 
-function pauseTimer(G, ctx) {
+function pauseTimer(G: State, ctx: Ctx) {
   if (G.countdownEnd) {
     G.countdownLeft = G.countdownEnd - Date.now()
     G.countdownEnd = null
   }
 }
 
-function resumeTimer(G, ctx) {
+function resumeTimer(G: State, ctx: Ctx) {
   if (G.countdownLeft) {
     G.countdownEnd = Date.now() + G.countdownLeft
     G.countdownLeft = null
