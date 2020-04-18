@@ -30,7 +30,7 @@ function NamingPhase(props: NamingPhaseProps) {
       />
     )
   }
-  const numFilledNames = currentNames.filter(v => !!v).length
+  const numFilledNames = currentNames.filter(v => !!(v.trim())).length
   const done = numFilledNames === numberOfNames
   let heading
   if (!isActive) {
@@ -51,7 +51,7 @@ function NamingPhase(props: NamingPhaseProps) {
         mt={1}
         bg={disabled ? 'gray' : 'green'}
         onClick={() => {
-          chooseNames(currentNames)
+          chooseNames(currentNames.map(v => v.trim()))
         }}
         disabled={disabled}
       >

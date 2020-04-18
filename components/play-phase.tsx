@@ -172,7 +172,7 @@ function Body(props: BodyProps) {
     const pauseOrResumeText = isPause ? 'Resume Timer' : 'Pause Timer'
     button('green', moves.addCurrentNameAndGetNextName, 'Guessed Correctly, Get Next Name!', disabled)
     button('red', moves.undoLastGuess, 'Oops, undo my last move', disabled)
-    button(null, pauseOrResume, pauseOrResumeText)
+    button(null, pauseOrResume, pauseOrResumeText, !isActive)
     button(null, moves.endTimer, 'End Timer', !isPlaying)
   } else if (playingStage === 'ending') {
     button(null, moves.endTurn, 'End Turn', !isPlaying)

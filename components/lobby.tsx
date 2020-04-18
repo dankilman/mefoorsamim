@@ -28,6 +28,9 @@ interface WaitingRoomProps {
 function WaitingRoom(props: WaitingRoomProps) {
   const {gameID, playerName, setPlayerName, gameState, setGameState} = props
   const players = gameState['players'] || {}
+  const isJoined = !!players[playerName.trim()]
+  const numOfJoinedPlayers = Object.keys(players).length
+  const canStart = numOfJoinedPlayers >= 4 && numOfJoinedPlayers % 2 === 0
 
   const joinRoom = async () => {
     if (!playerName.trim()) {
@@ -39,6 +42,7 @@ function WaitingRoom(props: WaitingRoomProps) {
     })
     setGameState(gameState)
   }
+
   return (
     <Flex mt={10} flexWrap="wrap">
       <Heading width={1}>Enter your name, then click "Join". Click "Start" once everybody joined</Heading>
@@ -54,6 +58,8 @@ function WaitingRoom(props: WaitingRoomProps) {
         mt={1}
         width={1}
         onClick={() => joinRoom()}
+        bg={isJoined ? 'gray' : null}
+        disabled={isJoined}
       >
         Join
       </Button>
@@ -67,6 +73,8 @@ function WaitingRoom(props: WaitingRoomProps) {
         mt={1}
         width={1}
         onClick={() => api.lobby('start', {gameID})}
+        bg={!canStart || !isJoined ? 'gray' : null}
+        disabled={!canStart || !isJoined}
       >
         Start
       </Button>

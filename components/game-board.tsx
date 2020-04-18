@@ -32,7 +32,7 @@ function Board(props: BoardProps) {
   const {G, ctx, moves, playerID, isActive, gameMetadata} = props
   const phase = ctx.phase
   if (phase === 'pairing') {
-    return <PairingPhase gameMetadata={gameMetadata} choosePairs={moves.choosePairs}/>
+    return <PairingPhase gameMetadata={gameMetadata} choosePairs={moves.choosePairs} isActive={isActive}/>
   } else if (phase === 'naming') {
     return <NamingPhase G={G} isActive={isActive} chooseNames={moves.chooseNames}/>
   } else if (phase === 'playing') {
