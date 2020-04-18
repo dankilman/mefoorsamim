@@ -18,13 +18,16 @@ function GameArea(props: GameAreaProps) {
   const playerID = playerConfig?.id
 
   const hostName = typeof window === 'undefined' ? 'localhost' : window.location.hostname
-  const gameServerPort = config.gameServerPort
+  const gameServerScheme = config.clientGameServerScheme
+  const gameServerPort = config.clientGameServerPort
   const GameClient: any = Client({
     game: Game,
     numPlayers: Object.keys(players).length,
     board: GameBoard,
     debug: true,
-    multiplayer: SocketIO({server: `${hostName}:${gameServerPort}`}),
+    multiplayer: SocketIO({
+      server: `${gameServerScheme}://${hostName}:${gameServerPort}`
+    }),
     gameMetadata: gameState,
   })
 

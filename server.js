@@ -5,8 +5,7 @@ const Router = require('@koa/router')
 const config = require('./lib/config')
 
 const port = config.serverPort
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
+const app = next({ dev: config.dev })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
