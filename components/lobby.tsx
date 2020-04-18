@@ -119,6 +119,9 @@ function Lobby(props: LobbyProps) {
 
   fetchGameState(gameID, setGameState)
 
+  const players = gameState['players'] || {}
+  const isSpectator = !players[playerName.trim()]
+
   const rules = [
     'Must be a real/fictive character: Not an object, a band name or a tv show for example.',
     'Reasonably known: Character needs to be reasonably known within the group of people playing the game.',
@@ -128,6 +131,18 @@ function Lobby(props: LobbyProps) {
   ]
   const header = (
     <Flex mt={10} flexWrap="wrap" width={1} justifyContent="flex-end">
+      <Flex
+        sx={{
+          border: '1px solid black',
+          borderRadius: '4px',
+        }}
+        alignItems="center"
+        mr={1}
+        pl={2}
+        width={300}
+      >
+        {playerName} {isSpectator ? '(Not In Game)' : ''}
+      </Flex>
       <Button
         onClick={() => setShowHelpModal(true)}
       >
