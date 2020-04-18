@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "NODE_ENV=production node server.js",
-    "prod": "DEPLOYED=1 NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@koa/router": "^9.0.0",
