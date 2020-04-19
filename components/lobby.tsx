@@ -6,16 +6,12 @@ import api from '../lib/api-client'
 import LobbyGame from './lobby-game'
 import {useCookies} from 'react-cookie'
 
-async function fetchGameDataLoop(gameID, setGameState) {
+async function fetchGameData(gameID, setGameState, previousHash=null) {
   const gameState = await api.lobby('get', {gameID})
-  setGameState(gameState)
-  if (gameState.status !== 'running') {
-    setTimeout(() => fetchGameDataLoop(gameID, setGameState), 1000)
+  if (!previousHash || gameState.hash !== previousHash) {
+    setGameState(gameState)
   }
-}
-
-function fetchGameState(gameID, setGameState) {
-  useEffect(() => { fetchGameDataLoop(gameID, setGameState) }, [])
+  setTimeout(() => fetchGameData(gameID, setGameState, gameState.hash), 1000)
 }
 
 interface WaitingRoomProps {
@@ -118,7 +114,7 @@ function Lobby(props: LobbyProps) {
     )
   }
 
-  fetchGameState(gameID, setGameState)
+  useEffect(() => { fetchGameData(gameID, setGameState) }, [])
 
   const players = gameState['players'] || {}
   const isSpectator = !players[playerName.trim()]

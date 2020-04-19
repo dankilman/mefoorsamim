@@ -1,3 +1,4 @@
+import md5 from 'md5'
 import store from '../../lib/lobby-store'
 
 const nonExistentRoomStatus = 'non-existent'
@@ -47,5 +48,6 @@ export default async (req, res) => {
   const body = req.body
   const type = body.type
   const result = await handlers[type](body)
+  result['hash'] = md5(JSON.stringify(result))
   res.status(200).json(result)
 }
