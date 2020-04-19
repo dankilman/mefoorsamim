@@ -2,6 +2,7 @@ const Koa = require('koa')
 const next = require('next')
 const Router = require('@koa/router')
 
+require('dotenv').config()
 const config = require('./lib/config')
 
 const port = config.serverPort
