@@ -94,7 +94,11 @@ function Lobby(props: LobbyProps) {
   const [gameState, setGameState] = useState({})
 
   let showComponent
-  if (gameState['status'] === 'running') {
+  if (!gameState['status']) {
+    showComponent = (
+      <Heading>Loading Game...</Heading>
+    )
+  } else if (gameState['status'] === 'running') {
     showComponent = (
       <LobbyGame
         gameID={gameID}

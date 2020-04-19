@@ -1,5 +1,6 @@
 import React from 'react'
 import {Client as RawClient} from 'boardgame.io/client'
+import {Heading} from 'rebass'
 
 interface ClientProps {
   game?
@@ -65,7 +66,7 @@ export function Client(opts: ClientProps) {
     render() {
       const state = this.client.getState()
       if (state === null) {
-        return <div className="bgio-loading">connecting...</div>
+        return <Heading>Loading Game...</Heading>
       }
       let _board = null
       if (board) {
