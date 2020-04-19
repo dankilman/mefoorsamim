@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import Lobby from '../../components/lobby'
+import {Box} from 'rebass'
+import Head from 'next/head'
 
 export default (props) => {
   const router = useRouter()
@@ -9,6 +11,11 @@ export default (props) => {
     return <div />
   }
   return (
-    <Lobby gameID={gameID as string} queryPlayerName={playerName as string}/>
+    <Box>
+      <Head>
+        <title>{gameID} | Mefoorsamim</title>
+      </Head>
+      <Lobby gameID={gameID as string} queryPlayerName={playerName as string}/>
+    </Box>
   )
 }
