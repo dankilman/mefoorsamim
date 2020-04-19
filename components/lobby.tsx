@@ -6,12 +6,14 @@ import api from '../lib/api-client'
 import LobbyGame from './lobby-game'
 import {useCookies} from 'react-cookie'
 
+let currentTimeoutID
+
 async function fetchGameData(gameID, setGameState, previousHash=null) {
   const gameState = await api.lobby('get', {gameID})
   if (!previousHash || gameState.hash !== previousHash) {
     setGameState(gameState)
   }
-  setTimeout(() => fetchGameData(gameID, setGameState, gameState.hash), 1000)
+  currentTimeoutID = setTimeout(() => fetchGameData(gameID, setGameState, gameState.hash), 1000)
 }
 
 interface WaitingRoomProps {
@@ -118,7 +120,14 @@ function Lobby(props: LobbyProps) {
     )
   }
 
-  useEffect(() => { fetchGameData(gameID, setGameState) }, [])
+  useEffect(() => {
+    fetchGameData(gameID, setGameState)
+    return () => {
+      if (currentTimeoutID) {
+        clearTimeout(currentTimeoutID)
+      }
+    }
+  }, [])
 
   const players = gameState['players'] || {}
   const isSpectator = !players[playerName.trim()]
@@ -178,7 +187,6 @@ function Lobby(props: LobbyProps) {
         </Flex>
       </ReactModal>
       <Button
-        sx={{display: 'none'}}
         bg="red"
         onClick={() => setShowClearModal(true)}
       >
