@@ -58,6 +58,8 @@ function Header(props: HeaderProps) {
           const isCurrent = playerID.toString() === currentPlayer.id.toString()
           const player = G.players[playerID]
           const color = player.pairColor
+          const pairIndex = player.pairIndex
+          const numOfGuesses = (G.pairGuesses[pairIndex] || []).length
           const borderColor = isCurrent ? 'black' : color
           const sx = {border: `3px solid ${borderColor}`}
           return (
@@ -67,7 +69,7 @@ function Header(props: HeaderProps) {
               sx={sx}
               bg={color}
             >
-              <Text verticalAlign="center" textAlign="center">{player.name}</Text>
+              <Text verticalAlign="center" textAlign="center">{player.name} ({numOfGuesses})</Text>
             </Card>
           )
         })}
