@@ -174,6 +174,7 @@ function Lobby(props: LobbyProps) {
         </Flex>
       </ReactModal>
       <Button
+        sx={{display: 'none'}}
         bg="red"
         onClick={() => setShowClearModal(true)}
       >
