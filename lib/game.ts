@@ -5,9 +5,6 @@ const countdownSeconds = 30
 const countdown = countdownSeconds * 1000
 const numNamesPerPlayer = 20
 
-type StartPhase = 'naming' | 'playing' | 'pairing'
-const startPhase: StartPhase = 'pairing' as StartPhase
-
 
 interface State {
   pairs?: any
@@ -108,7 +105,7 @@ const GameObject: Game<State> = {
   phases: {
 
     pairing: {
-      start: startPhase === 'pairing',
+      start: true,
       next: 'naming',
       endIf: (G, ctx) => !!G.pairs,
       onEnd: (G, ctx) => {
@@ -145,7 +142,6 @@ const GameObject: Game<State> = {
     },
 
     naming: {
-      start: startPhase === 'naming',
       next: 'playing',
       endIf: (G, ctx) => G.names.length === ctx.numPlayers * G.numNamesPerPlayer,
       onEnd: (G, ctx) => {
@@ -162,7 +158,6 @@ const GameObject: Game<State> = {
     },
 
     playing: {
-      start: startPhase === 'playing',
       endIf: (G, ctx) => G.names.length === 0 && !G.currentName,
       onEnd: (G, ctx) => {
         ctx.events.endGame()
