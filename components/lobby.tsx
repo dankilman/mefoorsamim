@@ -6,16 +6,16 @@ import api from '../lib/api-client'
 import LobbyGame from './lobby-game'
 import {useCookies} from 'react-cookie'
 
+async function fetchGameDataLoop(gameID, setGameState) {
+  const gameState = await api.lobby('get', {gameID})
+  setGameState(gameState)
+  if (gameState.status !== 'running') {
+    setTimeout(() => fetchGameDataLoop(gameID, setGameState), 1000)
+  }
+}
 
 function fetchGameState(gameID, setGameState) {
-  async function fetchData() {
-    const gameState = await api.lobby('get', {gameID})
-    setGameState(gameState)
-    if (gameState.status !== 'running') {
-      setTimeout(fetchData, 1000)
-    }
-  }
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => { fetchGameDataLoop(gameID, setGameState) }, [])
 }
 
 interface WaitingRoomProps {
@@ -91,6 +91,7 @@ interface LobbyProps {
 function Lobby(props: LobbyProps) {
   const {gameID, queryPlayerName} = props
   const [showHelpModal, setShowHelpModal] = useState(false)
+  const [showClearModal, setShowClearModal] = useState(false)
   const [cookies, setCookie] = useCookies(['playerName'])
   const playerName = queryPlayerName || cookies.playerName || ''
   const setPlayerName = name => setCookie('playerName', name, {path: '/'})
@@ -144,6 +145,7 @@ function Lobby(props: LobbyProps) {
         {playerName} {isSpectator ? '(Not In Game)' : ''}
       </Flex>
       <Button
+        mr={1}
         onClick={() => setShowHelpModal(true)}
       >
         ?
@@ -174,6 +176,43 @@ function Lobby(props: LobbyProps) {
             })}
           </ul>
         </Flex>
+      </ReactModal>
+      <Button
+        bg="red"
+        onClick={() => setShowClearModal(true)}
+      >
+        X
+      </Button>
+      <ReactModal
+        isOpen={showClearModal}
+        onRequestClose={() => setShowClearModal(false)}
+        ariaHideApp={false}
+        style={{
+          content: {
+            width: '600px',
+            height: '200px',
+            margin: '0 auto'
+          }
+        }}
+      >
+        <Flex width={1} flexWrap="wrap">
+          <Flex width={1} justifyContent="flex-end">
+            <Button onClick={() => setShowClearModal(false)}>X</Button>
+          </Flex>
+        </Flex>
+        <Heading>
+          Are you sure you want to clear current game data?
+        </Heading>
+        <Button
+          mt={1}
+          bg="red"
+          onClick={async () => {
+            await api.manage('clearGameData', {gameID})
+            setShowClearModal(false)
+          }}
+        >
+          Yes, Please Clear
+        </Button>
       </ReactModal>
     </Flex>
   )

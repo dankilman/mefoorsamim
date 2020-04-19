@@ -1,5 +1,5 @@
-async function lobby(type, body) {
-  const response = await fetch('/api/lobby', {
+async function request(endpoint, type, body) {
+  const response = await fetch(`/api/${endpoint}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -12,4 +12,12 @@ async function lobby(type, body) {
   return await response.json()
 }
 
-export default {lobby}
+async function lobby(type, body) {
+  return await request('lobby', type, body)
+}
+
+async function manage(type, body) {
+  return await request('manage', type, body)
+}
+
+export default {lobby, manage}

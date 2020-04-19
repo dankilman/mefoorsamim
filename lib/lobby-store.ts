@@ -28,4 +28,9 @@ async function get(key) {
   return await s.getItem(key)
 }
 
-export default {init, set, get}
+async function remove(key) {
+  const s = await getStore()
+  return await s.removeItem(key)
+}
+
+export default {init, set, get, remove}
