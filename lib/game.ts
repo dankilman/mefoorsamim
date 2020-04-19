@@ -1,6 +1,5 @@
 import {ActivePlayers, TurnOrder} from 'boardgame.io/core'
 import {Ctx, Game} from 'boardgame.io'
-// import mocks from './mocks'
 
 const countdownSeconds = 30
 const countdown = countdownSeconds * 1000
@@ -8,10 +7,6 @@ const numNamesPerPlayer = 20
 
 type StartPhase = 'naming' | 'playing' | 'pairing'
 const startPhase: StartPhase = 'pairing' as StartPhase
-
-// const startState = mocks.initialNamingState
-// const startState = mocks.initialStatePlaying
-const startState = undefined
 
 
 interface State {
@@ -81,7 +76,7 @@ const GameObject: Game<State> = {
   name: 'mefoorsamim',
 
   setup: (ctx, setupData): State => {
-    return startState || {
+    return {
       names: [],
       numNamesPerPlayer,
       pairGuesses: {},
