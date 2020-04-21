@@ -1,4 +1,5 @@
 import {Box, Flex, Heading, Text} from 'rebass'
+import Message from './lib/message'
 
 interface GameSummaryProps {
   summary: any
@@ -9,10 +10,8 @@ function GameSummary(props: GameSummaryProps) {
   const {guesses} = summary
   return (
     <Flex flexWrap="wrap">
-      <Flex width={1} flexWrap="wrap" m="auto">
-        <Text textAlign="center" m="auto" p={20} fontSize={50}>Game Over!</Text>
-      </Flex>
-      <Heading mb={1} width={1}>Number Of Guesses By Each Pair</Heading>
+      <Message fontSize={50} mt={10}>Game Over</Message>
+      <Heading mt={10} mb={1} width={1}>Number Of Guesses By Each Pair</Heading>
       {guesses.map((info, index) => {
         const {numberOfGuesses, player1Name, player2Name} = info
         return (

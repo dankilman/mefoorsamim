@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react'
 import ReactModal from 'react-modal'
-import {Box, Button, Card, Flex, Heading} from 'rebass'
+import {Box, Button, Card, Flex} from 'rebass'
 import {Input} from '@rebass/forms'
 import api from '../lib/api-client'
 import LobbyGame from './lobby-game'
 import {useCookies} from 'react-cookie'
+import Heading from './lib/heading'
+import Message from './lib/message'
 
 let currentTimeoutID
 
@@ -44,11 +46,16 @@ function WaitingRoom(props: WaitingRoomProps) {
 
   return (
     <Flex mt={10} flexWrap="wrap">
-      <Heading width={1}>Enter your name, then click "Join". Click "Start" once everybody joined</Heading>
+
+      <Message m={30}>
+        Enter your name, then click "Join". Click "Start" once everybody joined
+      </Message>
+
       <Input
         mt={1}
         width={1}
         value={playerName}
+        placeholder="Your Name"
         onChange={e => setPlayerName((e.target as any).value)}
         onInput={e => setPlayerName((e.target as any).value)}
         onKeyPress={e => e.key === 'Enter' && joinRoom()}
@@ -57,12 +64,12 @@ function WaitingRoom(props: WaitingRoomProps) {
         mt={1}
         width={1}
         onClick={() => joinRoom()}
-        bg={isJoined ? 'gray' : null}
+        bg={isJoined ? 'gray' : 'c5'}
         disabled={isJoined}
       >
         Join
       </Button>
-      <Heading mt={1} width={1}>Currently In</Heading>
+      <Message m={30}>Currently In</Message>
       <Box width={1}>
         {Object.entries(players).map(([playerName, playerConfig], index) => {
           return <Card m={1} key={index}>{playerName}</Card>
@@ -72,7 +79,7 @@ function WaitingRoom(props: WaitingRoomProps) {
         mt={1}
         width={1}
         onClick={() => api.lobby('start', {gameID})}
-        bg={!canStart || !isJoined ? 'gray' : null}
+        bg={!canStart || !isJoined ? 'gray' : 'c5'}
         disabled={!canStart || !isJoined}
       >
         Start
@@ -156,6 +163,7 @@ function Lobby(props: LobbyProps) {
       <Button
         mr={1}
         onClick={() => setShowHelpModal(true)}
+        bg="c5"
       >
         ?
       </Button>
@@ -175,7 +183,7 @@ function Lobby(props: LobbyProps) {
             <Heading>
               Game Rules And Guidelines
             </Heading>
-            <Button onClick={() => setShowHelpModal(false)}>X</Button>
+            <Button bg="c5" onClick={() => setShowHelpModal(false)}>X</Button>
           </Flex>
           <ul>
             {rules.map((item, index) => {
@@ -187,7 +195,7 @@ function Lobby(props: LobbyProps) {
         </Flex>
       </ReactModal>
       <Button
-        bg="red"
+        bg="c3"
         onClick={() => setShowClearModal(true)}
       >
         X
@@ -206,7 +214,7 @@ function Lobby(props: LobbyProps) {
       >
         <Flex width={1} flexWrap="wrap">
           <Flex width={1} justifyContent="flex-end">
-            <Button onClick={() => setShowClearModal(false)}>X</Button>
+            <Button bg="c5" onClick={() => setShowClearModal(false)}>X</Button>
           </Flex>
         </Flex>
         <Heading>
@@ -214,7 +222,7 @@ function Lobby(props: LobbyProps) {
         </Heading>
         <Button
           mt={1}
-          bg="red"
+          bg="c3"
           onClick={async () => {
             await api.manage('clearGameData', {gameID})
             setShowClearModal(false)

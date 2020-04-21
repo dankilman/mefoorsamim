@@ -1,7 +1,8 @@
 import {State} from '../lib/game'
 import {useState} from 'react'
 import {Input} from '@rebass/forms'
-import {Button, Flex, Heading} from 'rebass'
+import {Button, Flex} from 'rebass'
+import Message from './lib/message'
 
 interface NamingPhaseProps {
   G: State
@@ -43,7 +44,7 @@ function NamingPhase(props: NamingPhaseProps) {
   const disabled = !done || !isActive
   return (
     <Flex width={1} flexWrap="wrap">
-      <Heading mt={10} width={1}>{heading}</Heading>
+      <Message m={10}>{heading}</Message>
       <Flex width={1} flexWrap="wrap" justifyContent="space-between">
         {inputs}
       </Flex>

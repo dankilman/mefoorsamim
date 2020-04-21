@@ -166,19 +166,19 @@ function Body(props: BodyProps) {
       // don't show word until start is pressed
       content = null
     }
-    button(null, moves.startTurn, 'Start Turn!', !isPlaying)
+    button('c5', moves.startTurn, 'Start Turn!', !isPlaying)
   } else if (playingStage === 'playing') {
     const isPause = !!G.countdownLeft
     const disabled = isPause || !isPlaying
     const pauseOrResume = isPause ? moves.resumeTimer : moves.pauseTimer
     const pauseOrResumeText = isPause ? 'Resume Timer' : 'Pause Timer'
     button('green', moves.addCurrentNameAndGetNextName, 'Guessed Correctly, Get Next Name!', disabled)
-    button('red', moves.undoLastGuess, 'Oops, undo my last move', disabled)
-    button(null, pauseOrResume, pauseOrResumeText, !isActive)
-    button(null, moves.endTimer, 'End Timer', !isPlaying)
+    button('c3', moves.undoLastGuess, 'Oops, undo my last move', disabled)
+    button('c5', pauseOrResume, pauseOrResumeText, !isActive)
+    button('c5', moves.endTimer, 'End Timer', !isPlaying)
   } else if (playingStage === 'ending') {
-    button(null, moves.endTurn, 'End Turn', !isPlaying)
-    button(null, moves.addLastAndEndTurn, 'End Turn But Also Add Last Name!', !isPlaying)
+    button('c5', moves.endTurn, 'End Turn', !isPlaying)
+    button('c5', moves.addLastAndEndTurn, 'End Turn But Also Add Last Name!', !isPlaying)
   } else {
     console.error(`Unexpected stage ${playingStage}`)
   }

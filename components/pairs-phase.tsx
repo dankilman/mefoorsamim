@@ -1,6 +1,7 @@
 import {Server} from 'boardgame.io'
 import {useState} from 'react'
-import {Box, Button, Flex, Heading} from 'rebass'
+import {Box, Button, Flex} from 'rebass'
+import Message from './lib/message'
 
 interface PairingPhaseProps {
   gameMetadata: Server.GameMetadata
@@ -12,11 +13,11 @@ function PairingPhase(props: PairingPhaseProps) {
   const [currentPairs, setCurrentPairs] = useState([])
   const {gameMetadata, choosePairs, isActive} = props
   const colors = [
-    '#C4B7CB',
-    '#BBC7CE',
-    '#BFEDEF',
-    '#98E2C6',
-    '#545C52'
+    'c1',
+    'c2',
+    'c3',
+    'c4',
+    'c5'
   ]
   const totalPlayers = Object.keys(gameMetadata.players).length
   const shouldPickFirstPairMember = currentPairs.length === 0 || currentPairs[currentPairs.length - 1].length === 2
@@ -36,7 +37,7 @@ function PairingPhase(props: PairingPhaseProps) {
   }
   return (
     <Flex mt={10} width={1} flexWrap="wrap">
-      <Heading width={1}>{heading}</Heading>
+      <Message>{heading}</Message>
       {Object.values(gameMetadata.players).map((playerMetadata, index) => {
         let pairIndex = -1
         for (let i = 0; i < currentPairs.length; i++) {
@@ -71,6 +72,11 @@ function PairingPhase(props: PairingPhaseProps) {
             bg={bg}
             variant={variant}
             disabled={buttonDisabled || isSelected}
+            sx={isSelected ? {
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderColor: 'black',
+            } : null}
           >
             {playerMetadata.name}
           </Button>
@@ -89,7 +95,7 @@ function PairingPhase(props: PairingPhaseProps) {
             }
             setCurrentPairs(newCurrentPairs)
           }}
-          bg={(buttonDisabled || undoDisabled) ? 'gray' : null}
+          bg={(buttonDisabled || undoDisabled) ? 'gray' : 'c5'}
           disabled={buttonDisabled || undoDisabled}
         >
           Undo
