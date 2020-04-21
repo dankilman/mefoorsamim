@@ -125,7 +125,7 @@ function Body(props: BodyProps) {
     const b = (
       <Button
         key={buttons.length}
-        bg={disabled ? 'gray' : bg}
+        bg={disabled ? 'g1' : bg}
         ml={ml}
         onClick={() => onClick()}
         flex={1}

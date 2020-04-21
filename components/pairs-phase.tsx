@@ -95,13 +95,13 @@ function PairingPhase(props: PairingPhaseProps) {
             }
             setCurrentPairs(newCurrentPairs)
           }}
-          bg={(buttonDisabled || undoDisabled) ? 'gray' : 'c5'}
+          bg={(buttonDisabled || undoDisabled) ? 'g1' : 'c5'}
           disabled={buttonDisabled || undoDisabled}
         >
           Undo
         </Button>
         <Button
-          bg={(submitDisabled || buttonDisabled) ? 'gray' : 'green'}
+          bg={(submitDisabled || buttonDisabled) ? 'g1' : 'green'}
           onClick={() => {
             choosePairs(currentPairs.map(([player1, player2], index) => ({
               color: colors[index], player1, player2, index

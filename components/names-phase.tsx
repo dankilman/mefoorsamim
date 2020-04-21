@@ -50,7 +50,7 @@ function NamingPhase(props: NamingPhaseProps) {
       </Flex>
       <Button
         mt={1}
-        bg={disabled ? 'gray' : 'green'}
+        bg={disabled ? 'g1' : 'green'}
         onClick={() => {
           chooseNames(currentNames.map(v => v.trim()))
         }}

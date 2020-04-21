@@ -64,7 +64,7 @@ function WaitingRoom(props: WaitingRoomProps) {
         mt={1}
         width={1}
         onClick={() => joinRoom()}
-        bg={isJoined ? 'gray' : 'c5'}
+        bg={isJoined ? 'g1' : 'c5'}
         disabled={isJoined}
       >
         Join
@@ -79,7 +79,7 @@ function WaitingRoom(props: WaitingRoomProps) {
         mt={1}
         width={1}
         onClick={() => api.lobby('start', {gameID})}
-        bg={!canStart || !isJoined ? 'gray' : 'c5'}
+        bg={!canStart || !isJoined ? 'g1' : 'c5'}
         disabled={!canStart || !isJoined}
       >
         Start
@@ -147,7 +147,7 @@ function Lobby(props: LobbyProps) {
     'Bazaar rule: If a correct name was guessed right as the turn ends, it is a valid win.',
   ]
   const header = (
-    <Flex mt={10} flexWrap="wrap" width={1} justifyContent="flex-end">
+    <Flex flexWrap="wrap" width={1} justifyContent="flex-end">
       <Flex
         sx={{
           border: '1px solid black',
