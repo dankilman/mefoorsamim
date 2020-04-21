@@ -237,6 +237,8 @@ function Lobby(props: LobbyProps) {
   return (
     <Flex
       width="800px"
+      p={10}
+      bg="rgba(255, 255, 255, 0.85)"
       flexWrap="wrap"
       m="0 auto"
     >

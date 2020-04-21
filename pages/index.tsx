@@ -14,13 +14,15 @@ export default () => {
     <Flex
       flexWrap="wrap"
       width={500}
+      p={10}
+      bg="rgba(255, 255, 255, 0.85)"
       justifyContent="center"
       m="auto"
     >
       <Head>
         <title>Mefoorsamim</title>
       </Head>
-      <Heading width={1} mt={12} mb={1}>Mefoorsamim</Heading>
+      <Heading width={1} mb={1}>Mefoorsamim</Heading>
       <Flex width={1} mt={2}>
         <Input
           flex={5}

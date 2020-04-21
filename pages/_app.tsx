@@ -10,12 +10,15 @@ theme.colors = Object.assign({
 }, theme.colors)
 
 import '../css/global.css'
+import Stripes from '../components/lib/stripes'
 
 export default ({ Component, pageProps }) => {
   return (
     <CookiesProvider>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <Stripes>
+          <Component {...pageProps} />
+        </Stripes>
       </ThemeProvider>
     </CookiesProvider>
   )
