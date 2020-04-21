@@ -72,11 +72,11 @@ function PairingPhase(props: PairingPhaseProps) {
             bg={bg}
             variant={variant}
             disabled={buttonDisabled || isSelected}
-            sx={isSelected ? {
+            sx={{
               borderStyle: 'solid',
               borderWidth: 1,
-              borderColor: 'black',
-            } : null}
+              borderColor: isSelected ? 'black' : 'transparent',
+            }}
           >
             {playerMetadata.name}
           </Button>
