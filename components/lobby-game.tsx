@@ -23,7 +23,7 @@ function GameArea(props: GameAreaProps) {
     game: Game,
     numPlayers: Object.keys(players).length,
     board: GameBoard,
-    debug: true,
+    debug: false,
     multiplayer: SocketIO({
       server: `${gameServerPrefix}${config.hostName}:${gameServerPort}`
     }),

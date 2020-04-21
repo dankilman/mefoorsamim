@@ -63,14 +63,16 @@ function Header(props: HeaderProps) {
           const borderColor = isCurrent ? 'black' : color
           const sx = {border: `3px solid ${borderColor}`}
           return (
-            <Card
+            <Flex
               flex={1}
+              alignItems="center"
               key={index}
               sx={sx}
               bg={color}
+              p={2}
             >
-              <Text verticalAlign="center" textAlign="center">{player.name} ({numOfGuesses})</Text>
-            </Card>
+              <Text flex={1} textAlign="center">{player.name} ({numOfGuesses})</Text>
+            </Flex>
           )
         })}
       </Flex>
