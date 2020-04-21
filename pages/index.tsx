@@ -18,6 +18,7 @@ export default () => {
       bg="rgba(255, 255, 255, 0.85)"
       justifyContent="center"
       m="auto"
+      sx={{borderRadius: '0 0 4px 4px'}}
     >
       <Head>
         <title>Mefoorsamim</title>

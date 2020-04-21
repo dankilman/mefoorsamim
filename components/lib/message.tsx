@@ -16,7 +16,7 @@ export default props =>
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: 'black',
-        borderRadius: 30,
+        borderRadius: 25,
       }}
     />
   </Flex>

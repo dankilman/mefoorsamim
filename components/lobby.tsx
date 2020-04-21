@@ -241,6 +241,7 @@ function Lobby(props: LobbyProps) {
       bg="rgba(255, 255, 255, 0.85)"
       flexWrap="wrap"
       m="0 auto"
+      sx={{borderRadius: '0 0 4px 4px'}}
     >
       {header}
       {showComponent}
