@@ -34,6 +34,7 @@ export default () => {
         <Button
           flex={1}
           onClick={() => goToRoom() }
+          bg="c5"
         >
           Play
         </Button>
