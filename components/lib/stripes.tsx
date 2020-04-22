@@ -1,13 +1,31 @@
 import {Box} from 'rebass'
+import {useTheme} from 'emotion-theming'
 
-export default props =>
-  <Box
-    {...props}
-    width={1}
-    height="100vh"
-    sx={{
-      background: 'repeating-linear-gradient(45deg,#ffc857 0%, #ffc857 20%, #e9724c 20%, #e9724c 40%, #c5283d 40%, #c5283d 60%, #481d24 60%, #481d24 80%, #255f85 80%, #255f85 100%)'
-    }}
-  />
-
+export default props => {
+  const {colors: {c1, c2, c3, c4, c5}} = useTheme()
+  return (
+    <Box
+      {...props}
+      width={1}
+      height="100vh"
+      css={{
+        background: `
+          repeating-linear-gradient(
+            45deg,
+            ${c1} 0%,
+            ${c1} 20%,
+            ${c2} 20%,
+            ${c2} 40%,
+            ${c3} 40%,
+            ${c3} 60%,
+            ${c4} 60%,
+            ${c4} 80%,
+            ${c5} 80%,
+            ${c5} 100%
+          )
+        `
+      }}
+    />
+  )
+}
 
