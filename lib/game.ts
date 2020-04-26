@@ -172,7 +172,6 @@ const GameObject: Game<State> = {
           popName(G)
         },
         onEnd: (G, ctx) => {
-          shuffleNames(G, ctx)
           G.currentTurnGuesses = 0
           G.hasLastGuessForUndo = false
           G.countdownEnd = null
@@ -218,10 +217,12 @@ const GameObject: Game<State> = {
             moves: {
               addLastAndEndTurn(G, ctx) {
                 addGuessToPair(G, ctx)
+                shuffleNames(G, ctx)
                 ctx.events.endTurn()
               },
               endTurn(G, ctx) {
                 restoreName(G)
+                shuffleNames(G, ctx)
                 ctx.events.endTurn()
               }
             },

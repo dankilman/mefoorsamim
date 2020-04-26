@@ -1,10 +1,9 @@
-import {Server} from 'boardgame.io'
 import {useState} from 'react'
 import {Box, Button, Flex} from 'rebass'
 import Message from './lib/message'
 
 interface PairingPhaseProps {
-  gameMetadata: Server.GameMetadata
+  gameMetadata: any
   choosePairs: any
   isActive: boolean
 }
@@ -19,7 +18,8 @@ function PairingPhase(props: PairingPhaseProps) {
     'c4',
     'c5'
   ]
-  const totalPlayers = Object.keys(gameMetadata.players).length
+  const players = gameMetadata
+  const totalPlayers = players.length
   const shouldPickFirstPairMember = currentPairs.length === 0 || currentPairs[currentPairs.length - 1].length === 2
   const noMorePicks = currentPairs.length === totalPlayers / 2 && currentPairs[currentPairs.length - 1].length === 2
   const buttonDisabled = !isActive
@@ -38,7 +38,7 @@ function PairingPhase(props: PairingPhaseProps) {
   return (
     <Flex mt={10} width={1} flexWrap="wrap">
       <Message>{heading}</Message>
-      {Object.values(gameMetadata.players).map((playerMetadata, index) => {
+      {players.map((playerMetadata, index) => {
         let pairIndex = -1
         for (let i = 0; i < currentPairs.length; i++) {
           if (pairIndex > -1) {

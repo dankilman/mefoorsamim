@@ -10,11 +10,10 @@ interface ClientProps {
   board?
   multiplayer?
   debug?
-  gameMetadata?
 }
 
 export function Client(opts: ClientProps) {
-  let { game, numPlayers, board, multiplayer, debug, gameMetadata} = opts
+  let { game, numPlayers, board, multiplayer, debug} = opts
 
 
   return class WrappedBoard extends React.Component {
@@ -81,7 +80,7 @@ export function Client(opts: ClientProps) {
           reset: this.client.reset,
           undo: this.client.undo,
           redo: this.client.redo,
-          gameMetadata,
+          gameMetadata: this.client.gameMetadata,
         })
       }
       return <div className="bgio-client">{_board}</div>

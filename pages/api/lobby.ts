@@ -1,6 +1,9 @@
 import md5 from 'md5'
 import store from '../../lib/lobby-store'
+import gameStore from '../../lib/game-server-store'
 import config from '../../lib/config'
+import {InitializeGame} from 'boardgame.io/internal'
+import game from '../../lib/game'
 
 const nonExistentRoomStatus = 'non-existent'
 const initialRoomStatus = 'lobby'
@@ -34,6 +37,13 @@ const startHandler = async ({gameID, numberOfNamesToFill}) => {
   }
   gameState.setupData = {numberOfNamesToFill}
   gameState.status = runningStatus
+  const state = InitializeGame({
+    game,
+    numPlayers: Object.keys(gameState.players).length,
+    setupData: gameState.setupData
+  })
+  await gameStore.setMetadata(gameID, gameState)
+  await gameStore.setState(gameID, state)
   await store.set(gameID, gameState)
   return gameState
 }

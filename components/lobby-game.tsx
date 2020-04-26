@@ -27,7 +27,6 @@ function GameArea(props: GameAreaProps) {
     multiplayer: SocketIO({
       server: `${gameServerPrefix}${config.hostName}:${gameServerPort}`
     }),
-    gameMetadata: gameState,
   })
 
   return (
