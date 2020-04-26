@@ -180,7 +180,7 @@ function Body(props: BodyProps) {
     button('c5', moves.endTimer, 'End Timer', !isPlaying)
   } else if (playingStage === 'ending') {
     button('c5', moves.endTurn, 'End Turn', !isPlaying)
-    button('c5', moves.addLastAndEndTurn, 'End Turn But Also Add Last Name!', !isPlaying)
+    button('c5', moves.addLastAndEndTurn, 'We guessed the last name right!', !isPlaying)
   } else {
     console.error(`Unexpected stage ${playingStage}`)
   }
