@@ -3,7 +3,6 @@ import {Ctx, Game} from 'boardgame.io'
 
 const countdownSeconds = 30
 const countdown = countdownSeconds * 1000
-const numNamesPerPlayer = 20
 
 
 interface State {
@@ -79,7 +78,7 @@ const GameObject: Game<State> = {
   setup: (ctx, setupData): State => {
     return {
       names: [],
-      numNamesPerPlayer,
+      numNamesPerPlayer: setupData.numberOfNamesToFill,
       pairGuesses: {},
       hasLastGuessForUndo: false,
       currentTurnGuesses: 0

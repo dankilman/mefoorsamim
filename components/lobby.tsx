@@ -3,6 +3,7 @@ import ReactModal from 'react-modal'
 import {Box, Button, Card, Flex} from 'rebass'
 import {Input} from '@rebass/forms'
 import api from '../lib/api-client'
+import config from '../lib/config'
 import LobbyGame from './lobby-game'
 import {useCookies} from 'react-cookie'
 import Heading from './lib/heading'
@@ -28,10 +29,12 @@ interface WaitingRoomProps {
 
 function WaitingRoom(props: WaitingRoomProps) {
   const {gameID, playerName, setPlayerName, gameState, setGameState} = props
+  const [numberOfNamesToFill, setNumberOfNamesToFill] = useState('')
   const players = gameState['players'] || {}
   const isJoined = !!players[playerName.trim()]
   const numOfJoinedPlayers = Object.keys(players).length
   const canStart = numOfJoinedPlayers >= 4 && numOfJoinedPlayers % 2 === 0
+  const startDisabled = !canStart || !isJoined
 
   const joinRoom = async () => {
     if (!playerName.trim()) {
@@ -75,12 +78,21 @@ function WaitingRoom(props: WaitingRoomProps) {
           return <Card m={1} key={index}>{playerName}</Card>
         })}
       </Box>
+      <Flex width={1}>
+        <Input
+          placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill}, Enabled With Start)`}
+          disabled={startDisabled}
+          value={numberOfNamesToFill}
+          onChange={e => setNumberOfNamesToFill((e.target as any).value)}
+          onInput={e => setNumberOfNamesToFill((e.target as any).value)}
+        />
+      </Flex>
       <Button
         mt={1}
         width={1}
-        onClick={() => api.lobby('start', {gameID})}
-        bg={!canStart || !isJoined ? 'g1' : 'c5'}
-        disabled={!canStart || !isJoined}
+        onClick={() => api.lobby('start', {gameID, numberOfNamesToFill})}
+        bg={startDisabled ? 'g1' : 'c5'}
+        disabled={startDisabled}
       >
         Start
       </Button>

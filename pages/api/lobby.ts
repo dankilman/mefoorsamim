@@ -1,5 +1,6 @@
 import md5 from 'md5'
 import store from '../../lib/lobby-store'
+import config from '../../lib/config'
 
 const nonExistentRoomStatus = 'non-existent'
 const initialRoomStatus = 'lobby'
@@ -17,11 +18,21 @@ const addPlayer = async (gameID, playerName) => {
   await store.set(gameID, {players, status: gameState.status})
 }
 
-const startHandler = async ({gameID}) => {
+const startHandler = async ({gameID, numberOfNamesToFill}) => {
   const gameState = await getHandler({gameID})
-  if (gameState.status === nonExistentRoomStatus) {
+  if (gameState.status === nonExistentRoomStatus || gameState.status == runningStatus) {
     return gameState
   }
+  if (!numberOfNamesToFill) {
+    numberOfNamesToFill = config.defaultNumberOfNamesToFill.toString()
+  }
+  try {
+    numberOfNamesToFill = parseInt(numberOfNamesToFill)
+  } catch (err) {
+    console.debug(err)
+    numberOfNamesToFill = config.defaultNumberOfNamesToFill
+  }
+  gameState.setupData = {numberOfNamesToFill}
   gameState.status = runningStatus
   await store.set(gameID, gameState)
   return gameState
