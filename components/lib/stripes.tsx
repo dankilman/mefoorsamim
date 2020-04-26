@@ -7,7 +7,7 @@ export default props => {
     <Box
       {...props}
       width={1}
-      height="100vh"
+      minHeight="100vh"
       css={{
         background: `
           repeating-linear-gradient(
