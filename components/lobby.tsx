@@ -144,7 +144,7 @@ function Lobby(props: LobbyProps) {
     'Reasonably known: Character needs to be reasonably known within the group of people playing the game.',
     'Shbira rule: If "Bira" is the current name, you can\'t say "Sounds like shbira".',
     'AB rule: Cannot iterate letters until reaching the correct letter.',
-    'Bazaar rule: If a correct name was guessed right as the turn ends, it is a valid win.',
+    'Buzzer rule: If a correct name was guessed right as the turn ends, it is a valid win.',
   ]
   const header = (
     <Flex flexWrap="wrap" width={1} justifyContent="flex-end">
