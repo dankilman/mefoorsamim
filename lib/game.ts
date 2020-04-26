@@ -68,6 +68,10 @@ function popName(G: State) {
   }
 }
 
+function shuffleNames(G: State, ctx: Ctx) {
+  G.names = ctx.random.Shuffle(G.names)
+}
+
 const GameObject: Game<State> = {
 
   name: 'mefoorsamim',
@@ -144,9 +148,7 @@ const GameObject: Game<State> = {
     naming: {
       next: 'playing',
       endIf: (G, ctx) => G.names.length === ctx.numPlayers * G.numNamesPerPlayer,
-      onEnd: (G, ctx) => {
-        G.names = ctx.random.Shuffle(G.names)
-      },
+      onEnd: shuffleNames,
       moves: {
         chooseNames(G, ctx, names) {
           G.names.push(...names)
@@ -171,6 +173,7 @@ const GameObject: Game<State> = {
           popName(G)
         },
         onEnd: (G, ctx) => {
+          shuffleNames(G, ctx)
           G.currentTurnGuesses = 0
           G.hasLastGuessForUndo = false
           G.countdownEnd = null
