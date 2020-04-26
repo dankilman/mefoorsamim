@@ -145,6 +145,7 @@ function Lobby(props: LobbyProps) {
     'Shbira rule: If "Bira" is the current name, you can\'t say "Sounds like shbira".',
     'AB rule: Cannot iterate letters until reaching the correct letter.',
     'Buzzer rule: If a correct name was guessed right as the turn ends, it is a valid win.',
+    'Google rule: Do not google names during your turn as tempting as it may be',
   ]
   const header = (
     <Flex flexWrap="wrap" width={1} justifyContent="flex-end">
