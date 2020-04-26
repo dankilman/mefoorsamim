@@ -11,12 +11,12 @@ function GameSummary(props: GameSummaryProps) {
   return (
     <Flex flexWrap="wrap">
       <Message fontSize={50} mt={10}>Game Over</Message>
-      <Heading mt={10} mb={1} width={1}>Number Of Guesses By Each Pair</Heading>
+      <Heading mt={10} mb={1} width={1}>Number Of Mefoorsamim By Each Pair</Heading>
       {guesses.map((info, index) => {
         const {numberOfGuesses, player1Name, player2Name} = info
         return (
           <Box width={1} key={index}>
-            <Text width={1}>- {player1Name} and {player2Name} with {numberOfGuesses} correct guesses</Text>
+            <Text width={1}>- {player1Name} and {player2Name} with {numberOfGuesses} correct mefoorsamim answers</Text>
           </Box>
         )
       })}
@@ -24,7 +24,7 @@ function GameSummary(props: GameSummaryProps) {
         const {guesses: pairGuesses, player1Name, player2Name} = info
         return (
           <Box mt={1} width={1} key={index}>
-            <Heading width={1}>Guesses by {player1Name} and {player2Name}</Heading>
+            <Heading width={1}>Mefoorsamim by {player1Name} and {player2Name}</Heading>
             {pairGuesses.map((guess, index) => {
               return (
                 <Text key={index} width={1}>- {guess}</Text>
