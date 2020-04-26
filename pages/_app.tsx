@@ -10,6 +10,7 @@ theme.colors = Object.assign({
   g1: '#666666',
 }, theme.colors)
 
+import '../css/normalize.css'
 import '../css/global.css'
 import Stripes from '../components/lib/stripes'
 
