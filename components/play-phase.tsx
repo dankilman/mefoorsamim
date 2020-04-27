@@ -111,7 +111,8 @@ function Body(props: BodyProps) {
         flexWrap="wrap"
         width={1}
         height={300}
-        m="auto"
+        m="10px auto 0 auto"
+        overflow="auto"
       >
         <Text
           textAlign="center"

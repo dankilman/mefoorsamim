@@ -9,8 +9,13 @@ function GameSummary(props: GameSummaryProps) {
   const {summary} = props
   const {guesses} = summary
   return (
-    <Flex flexWrap="wrap">
-      <Message fontSize={50} mt={10}>Game Over</Message>
+    <Flex
+      flexWrap="wrap"
+      height="80vh"
+      overflow="auto"
+      m="10px auto 0 auto"
+    >
+      <Message fontSize={50}>Game Over</Message>
       <Heading mt={10} mb={1} width={1}>Number Of Mefoorsamim By Each Pair</Heading>
       {guesses.map((info, index) => {
         const {numberOfGuesses, player1Name, player2Name} = info
