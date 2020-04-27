@@ -9,6 +9,7 @@ theme.colors = Object.assign({
   c5: '#255f85',
   g1: '#666666',
 }, theme.colors)
+theme.fontSizes[2] = 19
 
 import '../css/normalize.css'
 import '../css/global.css'

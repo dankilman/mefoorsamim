@@ -80,7 +80,7 @@ function WaitingRoom(props: WaitingRoomProps) {
       </Box>
       <Flex width={1}>
         <Input
-          placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill}, Enabled With Start)`}
+          placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill}, Enabled When Start Is Enabled)`}
           disabled={startDisabled}
           value={numberOfNamesToFill}
           onChange={e => setNumberOfNamesToFill((e.target as any).value)}
@@ -187,7 +187,7 @@ function Lobby(props: LobbyProps) {
         style={{
           content: {
             width: '700px',
-            height: '180px',
+            height: '250px',
             margin: '0 auto',
             backgroundColor: '#f8f9fa',
           }
@@ -222,7 +222,7 @@ function Lobby(props: LobbyProps) {
         style={{
           content: {
             width: '600px',
-            height: '100px',
+            height: '110px',
             margin: '0 auto',
             backgroundColor: '#f8f9fa',
           }
