@@ -34,7 +34,7 @@ function Board(props: BoardProps) {
   if (phase === 'pairing') {
     return <PairingPhase gameMetadata={gameMetadata} choosePairs={moves.choosePairs} isActive={isActive}/>
   } else if (phase === 'naming') {
-    return <NamingPhase G={G} isActive={isActive} chooseNames={moves.chooseNames}/>
+    return <NamingPhase G={G} ctx={ctx} isActive={isActive} chooseNames={moves.chooseNames}/>
   } else if (phase === 'playing') {
     return <PlayingPhase G={G} ctx={ctx} moves={moves} isActive={isActive} playerID={playerID}/>
   } else if (ctx.gameover) {

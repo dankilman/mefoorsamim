@@ -10,6 +10,7 @@ interface State {
   order?: any
   players?: any
   names: string[]
+  playersThatSubmittedNames: string[]
   numNamesPerPlayer: number
   currentName?: string
   pairGuesses: object
@@ -78,6 +79,7 @@ const GameObject: Game<State> = {
   setup: (ctx, setupData): State => {
     return {
       names: [],
+      playersThatSubmittedNames: [],
       numNamesPerPlayer: setupData.numberOfNamesToFill,
       pairGuesses: {},
       hasLastGuessForUndo: false,
@@ -150,6 +152,7 @@ const GameObject: Game<State> = {
       onEnd: shuffleNames,
       moves: {
         chooseNames(G, ctx, names) {
+          G.playersThatSubmittedNames.push((ctx['playerID'] || '').toString())
           G.names.push(...names)
         },
       },

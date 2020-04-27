@@ -3,15 +3,18 @@ import {useState} from 'react'
 import {Input} from '@rebass/forms'
 import {Button, Flex} from 'rebass'
 import Message from './lib/message'
+import NamesHeader from './lib/names-header'
+import {Ctx} from 'boardgame.io'
 
 interface NamingPhaseProps {
   G: State
+  ctx: Ctx
   isActive: boolean
   chooseNames: any
 }
 
 function NamingPhase(props: NamingPhaseProps) {
-  const {G, isActive, chooseNames} = props
+  const {G, ctx, isActive, chooseNames} = props
   const numberOfNames = G.numNamesPerPlayer
   const [currentNames, setCurrentNames] = useState(new Array(numberOfNames))
   const inputs = []
@@ -44,6 +47,7 @@ function NamingPhase(props: NamingPhaseProps) {
   const disabled = !done || !isActive
   return (
     <Flex width={1} flexWrap="wrap">
+      <NamesHeader G={G} ctx={ctx} />
       <Message m={10}>{heading}</Message>
       <Flex width={1} flexWrap="wrap" justifyContent="space-between">
         {inputs}

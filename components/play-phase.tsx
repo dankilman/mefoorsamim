@@ -4,6 +4,7 @@ import {Box, Card, Flex, Text, Button} from 'rebass'
 import {Moves} from '../lib/types'
 import Countdown, {zeroPad} from 'react-countdown'
 import {now} from '../lib/time'
+import NamesHeader from './lib/names-header'
 
 function getCurrentStage(ctx: Ctx, playerID) {
   const activePlayers = ctx.activePlayers
@@ -25,7 +26,6 @@ function Header(props: HeaderProps) {
   const {G, ctx, isActive, moves, stage} = props
   const isWatching = stage === 'watching'
   const isPlaying = !isWatching && isActive
-  const currentPlayer = G.players[ctx.currentPlayer]
   const totalNames = ctx.numPlayers * G.numNamesPerPlayer
   // +1 because current name is popped into G.currentName
   const leftNames = G.names.length + 1
@@ -48,34 +48,7 @@ function Header(props: HeaderProps) {
   }
   return (
     <Flex width={1} flexWrap="wrap" >
-      <Flex
-        width={1}
-        flexWrap="wrap"
-        justifyContent="space-between"
-        mt={10}
-      >
-        {G.order.map((playerID, index) => {
-          const isCurrent = playerID.toString() === currentPlayer.id.toString()
-          const player = G.players[playerID]
-          const color = player.pairColor
-          const pairIndex = player.pairIndex
-          const numOfGuesses = (G.pairGuesses[pairIndex] || []).length
-          const borderColor = isCurrent ? 'black' : color
-          const sx = {border: `3px solid ${borderColor}`}
-          return (
-            <Flex
-              flex={1}
-              alignItems="center"
-              key={index}
-              sx={sx}
-              bg={color}
-              p={2}
-            >
-              <Text flex={1} textAlign="center">{player.name} ({numOfGuesses})</Text>
-            </Flex>
-          )
-        })}
-      </Flex>
+      <NamesHeader G={G} ctx={ctx} />
       <Flex
         flexWrap="wrap"
         width={1}
