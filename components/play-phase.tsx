@@ -1,10 +1,10 @@
-import {countdownSeconds, State} from '../lib/game'
+import {countdownSeconds, beforeStartCountdownSeconds, State} from '../lib/game'
 import {Ctx, PlayerID} from 'boardgame.io'
-import {Box, Card, Flex, Text, Button} from 'rebass'
+import {Box, Flex, Text, Button} from 'rebass'
 import {Moves} from '../lib/types'
-import Countdown, {zeroPad} from 'react-countdown'
-import {now} from '../lib/time'
+import {zeroPad} from 'react-countdown'
 import NamesHeader from './lib/names-header'
+import Countdown from './lib/countdown'
 
 function getCurrentStage(ctx: Ctx, playerID) {
   const activePlayers = ctx.activePlayers
@@ -30,22 +30,14 @@ function Header(props: HeaderProps) {
   // +1 because current name is popped into G.currentName
   const leftNames = G.names.length + 1
   const guessedNames = totalNames - leftNames
-  let countdownOrText = <Text>00:{countdownSeconds}</Text>
-  // when countdown is controlled, value is time left
-  const countdownValue = G.countdownEnd || G.countdownLeft
-  if (countdownValue) {
-    const onComplete = isPlaying ? () => moves.endTimer() : null
-    countdownOrText = (
-      <Countdown
-        date={countdownValue}
-        now={now}
-        onComplete={onComplete}
-        controlled={!!G.countdownLeft}
-        daysInHours={true}
-        renderer={({minutes, seconds}) => <Text>{zeroPad(minutes)}:{zeroPad(seconds)}</Text>}
-      />
-    )
-  }
+  let counter = (
+    <Countdown
+      context={{end: G.countdownEnd, left: G.countdownLeft}}
+      defaultValue={`00:${countdownSeconds}`}
+      textFn={({minutes, seconds}) => `${zeroPad(minutes)}:${zeroPad(seconds)}`}
+      onComplete={isPlaying ? () => moves.endTimer() : null}
+    />
+  )
   return (
     <Flex width={1} flexWrap="wrap" >
       <NamesHeader G={G} ctx={ctx} />
@@ -74,7 +66,7 @@ function Header(props: HeaderProps) {
           m="auto"
           fontSize={50}
         >
-          {countdownOrText}
+          {counter}
         </Text>
       </Flex>
     </Flex>
@@ -142,6 +134,20 @@ function Body(props: BodyProps) {
       content = null
     }
     button('c5', moves.startTurn, 'Start Turn!', !isPlaying)
+  } else if (playingStage === 'beforePlaying') {
+    if (isPlaying) {
+      // don't show word until start is pressed
+      content = null
+    }
+    const counter = (
+      <Countdown
+        context={{end: G.beforePlayEnd}}
+        defaultValue={`${beforeStartCountdownSeconds}...`}
+        textFn={({seconds}) => `${seconds}...`}
+        onComplete={isPlaying ? () => moves.actuallyStartTurn() : null}
+      />
+    )
+    button('c5', moves.startTurn, counter, !isPlaying)
   } else if (playingStage === 'playing') {
     const isPause = !!G.countdownLeft
     const disabled = isPause || !isPlaying
@@ -153,7 +159,7 @@ function Body(props: BodyProps) {
     button('c5', moves.endTimer, 'End Timer', !isPlaying)
   } else if (playingStage === 'ending') {
     button('c5', moves.endTurn, 'End Turn', !isPlaying)
-    button('c5', moves.addLastAndEndTurn, 'We guessed the last name right!', !isPlaying)
+    button('c5', moves.addLastAndEndTurn, 'We got the last name right!', !isPlaying)
   } else {
     console.error(`Unexpected stage ${playingStage}`)
   }

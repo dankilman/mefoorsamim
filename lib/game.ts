@@ -3,6 +3,8 @@ import {Ctx, Game} from 'boardgame.io'
 
 const countdownSeconds = 30
 const countdown = countdownSeconds * 1000
+const beforeStartCountdownSeconds = 3
+const beforeStartCountdown = beforeStartCountdownSeconds * 1000
 
 
 interface State {
@@ -19,6 +21,7 @@ interface State {
   summary?: object
   countdownEnd?: number
   countdownLeft?: number
+  beforePlayEnd?: number
 }
 
 function pauseTimer(G: State, ctx: Ctx) {
@@ -179,6 +182,7 @@ const GameObject: Game<State> = {
           G.hasLastGuessForUndo = false
           G.countdownEnd = null
           G.countdownLeft = null
+          G.beforePlayEnd = null
         },
         order: TurnOrder.CUSTOM_FROM('order'),
         stages: {
@@ -189,6 +193,16 @@ const GameObject: Game<State> = {
             moves: {
               startTurn(G, ctx) {
                 ctx.events.endStage()
+                G.beforePlayEnd = Date.now() + beforeStartCountdown
+              }
+            },
+            next: 'beforePlaying',
+          },
+          beforePlaying: {
+            moves: {
+              actuallyStartTurn(G, ctx) {
+                ctx.events.endStage()
+                G.beforePlayEnd = null
                 G.countdownEnd = Date.now() + countdown
               }
             },
@@ -238,5 +252,5 @@ const GameObject: Game<State> = {
 }
 
 export default GameObject
-export {countdownSeconds}
+export {countdownSeconds, beforeStartCountdownSeconds}
 export type {State}
