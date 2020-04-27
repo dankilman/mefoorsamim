@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import ReactModal from 'react-modal'
-import {Box, Button, Card, Flex} from 'rebass'
+import {Text, Box, Button, Card, Flex} from 'rebass'
 import {Input} from '@rebass/forms'
 import api from '../lib/api-client'
 import config from '../lib/config'
@@ -8,6 +8,7 @@ import LobbyGame from './lobby-game'
 import {useCookies} from 'react-cookie'
 import Heading from './lib/heading'
 import Message from './lib/message'
+import {useTheme} from 'emotion-theming'
 
 let currentTimeoutID
 
@@ -29,6 +30,7 @@ interface WaitingRoomProps {
 
 function WaitingRoom(props: WaitingRoomProps) {
   const {gameID, playerName, setPlayerName, gameState, setGameState} = props
+  const theme: any = useTheme()
   const [numberOfNamesToFill, setNumberOfNamesToFill] = useState('')
   const players = gameState['players'] || {}
   const isJoined = !!players[playerName.trim()]
@@ -50,7 +52,7 @@ function WaitingRoom(props: WaitingRoomProps) {
   return (
     <Flex mt={10} flexWrap="wrap">
 
-      <Message m={30}>
+      <Message m={20}>
         Enter your name, then click "Join". Click "Start" once everybody joined
       </Message>
 
@@ -72,14 +74,28 @@ function WaitingRoom(props: WaitingRoomProps) {
       >
         Join
       </Button>
-      <Message m={30}>Currently In</Message>
-      <Box width={1}>
+      <Message m={20}>Currently In</Message>
+
+      <Box
+        width={1}
+        display="grid"
+        css={{
+          gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+          gap: theme.space[1],
+        }}
+      >
         {Object.entries(players).map(([playerName, playerConfig], index) => {
-          return <Card m={1} key={index}>{playerName}</Card>
+          return (
+            <Card key={index}>
+              <Text textAlign="center">{playerName}</Text>
+            </Card>
+          )
         })}
       </Box>
+
       <Flex width={1}>
         <Input
+          mt={1}
           placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill}, Enabled When Start Is Enabled)`}
           disabled={startDisabled}
           value={numberOfNamesToFill}

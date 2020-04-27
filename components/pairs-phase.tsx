@@ -16,7 +16,7 @@ function PairingPhase(props: PairingPhaseProps) {
     'c2',
     'c3',
     'c4',
-    'c5'
+    'c5',
   ]
   const players = gameMetadata
   const totalPlayers = players.length
