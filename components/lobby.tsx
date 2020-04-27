@@ -186,8 +186,10 @@ function Lobby(props: LobbyProps) {
         ariaHideApp={false}
         style={{
           content: {
-            width: '800px',
-            margin: '0 auto'
+            width: '700px',
+            height: '180px',
+            margin: '0 auto',
+            backgroundColor: '#f8f9fa',
           }
         }}
       >
@@ -220,8 +222,9 @@ function Lobby(props: LobbyProps) {
         style={{
           content: {
             width: '600px',
-            height: '200px',
-            margin: '0 auto'
+            height: '100px',
+            margin: '0 auto',
+            backgroundColor: '#f8f9fa',
           }
         }}
       >
