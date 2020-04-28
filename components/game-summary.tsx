@@ -27,7 +27,7 @@ function GameSummary(props: GameSummaryProps) {
         display="grid"
         p={10}
         css={{
-          gridTemplateColumns: 'repeat(2, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
           justifyItems: 'center',
           gap: '5px',
           border: '1px solid black'
@@ -50,7 +50,7 @@ function GameSummary(props: GameSummaryProps) {
         display="grid"
         p={10}
         css={{
-          gridTemplateColumns: 'repeat(2, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
           justifyItems: 'center',
           gap: '5px',
           border: '1px solid black'
@@ -75,7 +75,7 @@ function GameSummary(props: GameSummaryProps) {
         display="grid"
         p={10}
         css={{
-          gridTemplateColumns: 'repeat(3, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(3, minmax(80px, 1fr))',
           justifyItems: 'center',
           gap: '5px',
           border: '1px solid black'
