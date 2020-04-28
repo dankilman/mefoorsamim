@@ -19,7 +19,7 @@ interface State {
   guesses: any[]
   hasLastGuessForUndo: boolean
   currentTurnGuesses: number
-  summary?: object
+  summary?: any
   countdownEnd?: number
   countdownLeft?: number
   beforePlayEnd?: number

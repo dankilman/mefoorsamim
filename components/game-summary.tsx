@@ -1,49 +1,48 @@
-import {Box, Flex, Heading, Text} from 'rebass'
+import {Box, Flex} from 'rebass'
 import Message from './lib/message'
 import {State} from '../lib/game'
+
+function table(header, items) {
+  const columns = header.length
+  const border = '1px solid black'
+  return (
+    <Box
+      mt={10}
+      width={1}
+      display="grid"
+      css={{
+        gridTemplateColumns: `repeat(${columns}, minmax(80px, 1fr))`,
+        borderTop: border,
+        borderRight: border,
+      }}
+    >
+      {header.concat(items).map((item, index) => {
+        const isHeader = index < columns
+        return (
+          <Box
+            key={index}
+            sx={{
+              padding: '8px',
+              borderLeft: border,
+              borderBottom: border,
+              backgroundColor: isHeader ? 'c5' : null,
+              color: isHeader ? '#fff' : null,
+            }}
+          >
+            {item}
+          </Box>
+        )
+      })}
+    </Box>
+  )
+}
 
 interface GameSummaryProps {
   G: State
 }
 
 function GameSummary(props: GameSummaryProps) {
-  const {G} = props
-  const summary: any = G.summary
-  const {guesses} = summary
-
-  function table(columns, items) {
-    return (
-      <Box
-        mt={10}
-        width={1}
-        display="grid"
-        css={{
-          gridTemplateColumns: `repeat(${columns}, minmax(80px, 1fr))`,
-          borderTop: '1px solid black',
-          borderRight: '1px solid black',
-        }}
-      >
-        {items.map((item, index) => {
-          const isHeader = index < columns
-          return (
-            <Box
-              key={index}
-              sx={{
-                padding: '8px',
-                borderLeft: '1px solid black',
-                borderBottom: '1px solid black',
-                backgroundColor: isHeader ? 'c5' : null,
-                color: isHeader ? '#fff' : null,
-              }}
-            >
-              {item}
-            </Box>
-          )
-        })}
-      </Box>
-    )
-  }
-
+  const {G: {players, guesses: allGuesses, summary: {guesses: pairGuesses}}} = props
   return (
     <Flex
       flexWrap="wrap"
@@ -54,24 +53,24 @@ function GameSummary(props: GameSummaryProps) {
     >
       <Message fontSize={50}>Game Summary</Message>
 
-      {table(2, ['Players', '# Mefoorsamim'].concat(guesses.flatMap((info) => {
+      {table(['Players', '# Mefoorsamim'], pairGuesses.flatMap((info) => {
         const {numberOfGuesses, player1Name, player2Name} = info
         return [`${player1Name} & ${player2Name}`, numberOfGuesses]
-      })))}
+      }))}
 
-      {table(2, ['Players', 'Mefoorsam'].concat(guesses.flatMap((info) => {
+      {table(['Players', 'Mefoorsam'], pairGuesses.flatMap((info) => {
         const {guesses: pairGuesses, player1Name, player2Name} = info
         return pairGuesses.flatMap((guess) => {
           return [`${player1Name} & ${player2Name}`, guess]
         })
-      })))}
+      }))}
 
-      {table(3, ['Speaker', 'Answerer', 'Mefoorsam'].concat(G.guesses.flatMap((info) => {
+      {table(['Speaker', 'Answerer', 'Mefoorsam'], allGuesses.flatMap((info) => {
         const {speakerIndex, answererIndex, name} = info
-        const speakerName = G.players[speakerIndex].name
-        const answererName = G.players[answererIndex].name
+        const speakerName = players[speakerIndex].name
+        const answererName = players[answererIndex].name
         return [speakerName, answererName, name]
-      })))}
+      }))}
 
     </Flex>
   )
