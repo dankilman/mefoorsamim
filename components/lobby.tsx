@@ -39,8 +39,9 @@ function WaitingRoom(props: WaitingRoomProps) {
   const numOfJoinedPlayers = Object.keys(players).length
   const canStart = numOfJoinedPlayers >= 4 && numOfJoinedPlayers % 2 === 0
   const startDisabled = !canStart || !isJoined
+
   const validatedSetNumberOfNames = value => {
-    if (!validator.isEmpty(value) && !validator.isInt(value, {min: 1, max: 1000})) {
+    if (!(validator.isEmpty(value) || validator.isInt(value, {min: 1, max: 1000}))) {
       return
     }
     setNumberOfNamesToFill(value)
