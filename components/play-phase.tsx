@@ -87,7 +87,7 @@ function Body(props: BodyProps) {
   const isWatching = stage === 'watching'
   const isPlaying = !isWatching && isActive
   let buttons = []
-  const button = (bg, onClick, text, disabled = false) => {
+  const button = (bg, onClick, text, disabled, zIndex = null) => {
     const ml = buttons.length === 0 ? 0 : 1
     const b = (
       <Button
@@ -97,6 +97,7 @@ function Body(props: BodyProps) {
         onClick={() => onClick()}
         flex={1}
         disabled={disabled}
+        css={{zIndex}}
       >
         {text}
       </Button>
@@ -156,7 +157,7 @@ function Body(props: BodyProps) {
     const pauseOrResumeText = isPause ? 'Resume Timer' : 'Pause Timer'
     button('green', moves.addCurrentNameAndGetNextName, 'Guessed Correctly, Get Next Name!', disabled)
     button('c3', moves.undoLastGuess, 'Oops, undo my last move', disabled)
-    button('c5', pauseOrResume, pauseOrResumeText, !isActive)
+    button('c5', pauseOrResume, pauseOrResumeText, !isActive, 1)
     button('c5', moves.endTimer, 'End Timer', !isPlaying)
   } else if (playingStage === 'ending') {
     button('c5', moves.endTurn, 'End Turn', !isPlaying)
@@ -190,9 +191,27 @@ function PlayingPhase(props: PlayingPhaseProps) {
   const {G, ctx, moves, isActive, playerID} = props
   const stage = getCurrentStage(ctx, playerID)
   const playingStage = getCurrentStage(ctx, ctx.currentPlayer)
+  const isPause = playingStage === 'playing' && !G.countdownEnd
+  let maybeOverlay = null
+  if (isPause) {
+    maybeOverlay = (
+      <Box
+        mt={10}
+        height="100%"
+        width="100%"
+        css={{
+          background: 'rgba(0, 0, 0, 0.8)',
+          position: 'absolute',
+          left: 0,
+          top: 0,
+        }}
+      />
+    )
+  }
   return (
-    <Box width={1}>
+    <Box width={1} css={{position: 'relative'}}>
       <Header G={G} ctx={ctx} isActive={isActive} moves={moves} stage={stage} />
+      {maybeOverlay}
       <Body G={G} isActive={isActive} playerID={playerID} moves={moves} stage={stage} playingStage={playingStage}/>
     </Box>
   )
