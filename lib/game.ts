@@ -119,10 +119,11 @@ const GameObject: Game<State> = {
       onEnd: (G, ctx) => {
         const order = []
         const players = {}
-        const pairs = []
-        for (const pair of G.pairs) {
+        const newPairs = []
+        const shuffledPairs: any = ctx.random.Shuffle(G.pairs)
+        for (const pair of shuffledPairs) {
           order.push(pair.player1.id)
-          pairs.push([pair.player1.id, pair.player2.id])
+          newPairs.push([pair.player1.id, pair.player2.id])
           for (const player of [pair.player1, pair.player2]) {
             players[player.id] = {
               pairColor: pair.color,
@@ -131,10 +132,10 @@ const GameObject: Game<State> = {
             }
           }
         }
-        for (const pair of G.pairs) {
+        for (const pair of shuffledPairs) {
           order.push(pair.player2.id)
         }
-        G.pairs = pairs
+        G.pairs = newPairs
         G.players = players
         G.order = order
       },
