@@ -11,6 +11,39 @@ function GameSummary(props: GameSummaryProps) {
   const summary: any = G.summary
   const {guesses} = summary
 
+  function table(columns, items) {
+    return (
+      <Box
+        mt={10}
+        width={1}
+        display="grid"
+        css={{
+          gridTemplateColumns: `repeat(${columns}, minmax(80px, 1fr))`,
+          borderTop: '1px solid black',
+          borderRight: '1px solid black',
+        }}
+      >
+        {items.map((item, index) => {
+          const isHeader = index < columns
+          return (
+            <Box
+              key={index}
+              sx={{
+                padding: '8px',
+                borderLeft: '1px solid black',
+                borderBottom: '1px solid black',
+                backgroundColor: isHeader ? 'c5' : null,
+                color: isHeader ? '#fff' : null,
+              }}
+            >
+              {item}
+            </Box>
+          )
+        })}
+      </Box>
+    )
+  }
+
   return (
     <Flex
       flexWrap="wrap"
@@ -19,82 +52,26 @@ function GameSummary(props: GameSummaryProps) {
       m="10px auto 0 auto"
       css={{alignContent: 'flex-start'}}
     >
-      <Message fontSize={50}>Game Over</Message>
+      <Message fontSize={50}>Game Summary</Message>
 
-      <Box
-        mt={10}
-        width={1}
-        display="grid"
-        p={10}
-        css={{
-          gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
-          justifyItems: 'center',
-          gap: '5px',
-          border: '1px solid black'
-        }}
-      >
-        <Box>Players</Box>
-        <Box># Mefoorsamim</Box>
-        {guesses.map((info) => {
-          const {numberOfGuesses, player1Name, player2Name} = info
-          return ([
-            <Box>{player1Name} & {player2Name}</Box>,
-            <Box>{numberOfGuesses}</Box>
-          ])
-        })}
-      </Box>
+      {table(2, ['Players', '# Mefoorsamim'].concat(guesses.flatMap((info) => {
+        const {numberOfGuesses, player1Name, player2Name} = info
+        return [`${player1Name} & ${player2Name}`, numberOfGuesses]
+      })))}
 
-      <Box
-        mt={10}
-        width={1}
-        display="grid"
-        p={10}
-        css={{
-          gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
-          justifyItems: 'center',
-          gap: '5px',
-          border: '1px solid black'
-        }}
-      >
-        <Box>Players</Box>
-        <Box>Mefoorsam</Box>
-        {guesses.map((info, index) => {
-          const {guesses: pairGuesses, player1Name, player2Name} = info
-          return pairGuesses.map((guess, index) => {
-            return ([
-              <Box>{player1Name} & {player2Name}</Box>,
-              <Box>{guess}</Box>
-            ])
-          })
-        })}
-      </Box>
+      {table(2, ['Players', 'Mefoorsam'].concat(guesses.flatMap((info) => {
+        const {guesses: pairGuesses, player1Name, player2Name} = info
+        return pairGuesses.flatMap((guess) => {
+          return [`${player1Name} & ${player2Name}`, guess]
+        })
+      })))}
 
-      <Box
-        mt={10}
-        width={1}
-        display="grid"
-        p={10}
-        css={{
-          gridTemplateColumns: 'repeat(3, minmax(80px, 1fr))',
-          justifyItems: 'center',
-          gap: '5px',
-          border: '1px solid black'
-        }}
-      >
-        <Box>Speaker</Box>
-        <Box>Answerer</Box>
-        <Box>Mefoorsam</Box>
-        {G.guesses.map((info, index) => {
-          const {speakerIndex, answererIndex, name} = info
-          const speakerName = G.players[speakerIndex].name
-          const answererName = G.players[answererIndex].name
-          return ([
-            <Box>{speakerName}</Box>,
-            <Box>{answererName}</Box>,
-            <Box>{name}</Box>
-          ])
-        })}
-      </Box>
+      {table(3, ['Speaker', 'Answerer', 'Mefoorsam'].concat(G.guesses.flatMap((info) => {
+        const {speakerIndex, answererIndex, name} = info
+        const speakerName = G.players[speakerIndex].name
+        const answererName = G.players[answererIndex].name
+        return [speakerName, answererName, name]
+      })))}
 
     </Flex>
   )
