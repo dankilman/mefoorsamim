@@ -14,6 +14,7 @@ export default () => {
     <Flex
       flexWrap="wrap"
       width={500}
+      maxWidth="100vw"
       p={10}
       bg="rgba(255, 255, 255, 0.85)"
       justifyContent="center"

@@ -204,6 +204,7 @@ function Lobby(props: LobbyProps) {
         mr={1}
         pl={2}
         width={300}
+        maxWidth="50vw"
       >
         {playerName} {isSpectator ? '(Not In Game)' : ''}
       </Flex>
@@ -221,7 +222,8 @@ function Lobby(props: LobbyProps) {
         style={{
           content: {
             width: '700px',
-            height: '250px',
+            maxWidth: '70vw',
+            height: '270px',
             margin: '0 auto',
             backgroundColor: '#f8f9fa',
           }
@@ -256,6 +258,7 @@ function Lobby(props: LobbyProps) {
         style={{
           content: {
             width: '600px',
+            maxWidth: '70vw',
             height: '110px',
             margin: '0 auto',
             backgroundColor: '#f8f9fa',
@@ -287,6 +290,7 @@ function Lobby(props: LobbyProps) {
   return (
     <Flex
       width="800px"
+      maxWidth="100vw"
       p={10}
       bg="rgba(255, 255, 255, 0.85)"
       flexWrap="wrap"
