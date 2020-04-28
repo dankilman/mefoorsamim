@@ -9,6 +9,8 @@ import {useCookies} from 'react-cookie'
 import Heading from './lib/heading'
 import Message from './lib/message'
 import {useTheme} from 'emotion-theming'
+import validator from 'validator'
+
 
 let currentTimeoutID
 
@@ -37,6 +39,12 @@ function WaitingRoom(props: WaitingRoomProps) {
   const numOfJoinedPlayers = Object.keys(players).length
   const canStart = numOfJoinedPlayers >= 4 && numOfJoinedPlayers % 2 === 0
   const startDisabled = !canStart || !isJoined
+  const validatedSetNumberOfNames = value => {
+    if (!validator.isEmpty(value) && !validator.isInt(value, {min: 1, max: 1000})) {
+      return
+    }
+    setNumberOfNamesToFill(value)
+  }
 
   const joinRoom = async () => {
     if (!playerName.trim()) {
@@ -99,8 +107,8 @@ function WaitingRoom(props: WaitingRoomProps) {
           placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill}, Enabled When Start Is Enabled)`}
           disabled={startDisabled}
           value={numberOfNamesToFill}
-          onChange={e => setNumberOfNamesToFill((e.target as any).value)}
-          onInput={e => setNumberOfNamesToFill((e.target as any).value)}
+          onChange={e => validatedSetNumberOfNames((e.target as any).value)}
+          onInput={e => validatedSetNumberOfNames((e.target as any).value)}
         />
       </Flex>
       <Button
