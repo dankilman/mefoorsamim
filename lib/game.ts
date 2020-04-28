@@ -16,6 +16,7 @@ interface State {
   numNamesPerPlayer: number
   currentName?: string
   pairGuesses: object
+  guesses: any[]
   hasLastGuessForUndo: boolean
   currentTurnGuesses: number
   summary?: object
@@ -47,16 +48,26 @@ function addGuessToPair(G: State, ctx: Ctx) {
   const currentPlayer = G.players[ctx.currentPlayer]
   const currentPairIndex = currentPlayer.pairIndex
   const currentPairGuesses = G.pairGuesses[currentPairIndex] || []
-  currentPairGuesses.push(G.currentName)
+  const [player1Index, player2Index] = G.pairs[currentPairIndex]
+  const speakerIndex = ctx.currentPlayer
+  const answererIndex = player1Index === speakerIndex ? player2Index : player1Index
+  const name = G.currentName
+  currentPairGuesses.push(name)
   G.currentTurnGuesses++
   G.hasLastGuessForUndo = true
   G.currentName = undefined
   G.pairGuesses[currentPairIndex] = currentPairGuesses
+  G.guesses.push({
+    speakerIndex,
+    answererIndex,
+    name,
+  })
 }
 
 function undoAddGuessToPair(G: State, ctx: Ctx) {
   G.hasLastGuessForUndo = false
   G.currentTurnGuesses--
+  G.guesses.pop()
   G.currentName = getPairGuesses(G, ctx).pop()
 }
 
@@ -85,6 +96,7 @@ const GameObject: Game<State> = {
       playersThatSubmittedNames: [],
       numNamesPerPlayer: setupData.numberOfNamesToFill,
       pairGuesses: {},
+      guesses: [],
       hasLastGuessForUndo: false,
       currentTurnGuesses: 0
     }

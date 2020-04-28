@@ -38,7 +38,7 @@ function Board(props: BoardProps) {
   } else if (phase === 'playing') {
     return <PlayingPhase G={G} ctx={ctx} moves={moves} isActive={isActive} playerID={playerID}/>
   } else if (ctx.gameover) {
-    return <GameSummary summary={G.summary} />
+    return <GameSummary G={G} />
   } else {
     return <Box>This should not have happened :( (board)</Box>
   }
