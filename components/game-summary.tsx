@@ -14,6 +14,7 @@ function GameSummary(props: GameSummaryProps) {
       height="80vh"
       overflow="auto"
       m="10px auto 0 auto"
+      css={{alignContent: 'flex-start'}}
     >
       <Message fontSize={50}>Game Over</Message>
       <Heading mt={10} mb={1} width={1}>Number Of Mefoorsamim By Each Pair</Heading>

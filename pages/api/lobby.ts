@@ -21,30 +21,61 @@ const addPlayer = async (gameID, playerName) => {
   await store.set(gameID, {players, status: gameState.status})
 }
 
-const startHandler = async ({gameID, numberOfNamesToFill}) => {
-  const gameState = await getHandler({gameID})
-  if (gameState.status === nonExistentRoomStatus || gameState.status == runningStatus) {
-    return gameState
+function validateCanStart(gameState) {
+  if (gameState.status !== initialRoomStatus) {
+    gameState.validationMessage = `Status is not ${initialRoomStatus}: ${gameState.status}`
+    return false
   }
-  if (!numberOfNamesToFill) {
-    numberOfNamesToFill = config.defaultNumberOfNamesToFill.toString()
+  const players = gameState.players || {}
+  const numOfPlayers = Object.keys(players).length
+  if (numOfPlayers < 4 || numOfPlayers % 2 !== 0) {
+    gameState.validationMessage = `Number of players must be an even number greater or equal than 4: ${numOfPlayers}`
+    return false
+  }
+  return true
+}
+
+function getNumberOfNamesToFill(inputValue) {
+  let result = inputValue
+  const defaultValue = config.defaultNumberOfNamesToFill
+  if (!result) {
+    return defaultValue
   }
   try {
-    numberOfNamesToFill = parseInt(numberOfNamesToFill)
+    result = parseInt(result)
+    if (isNaN(result)) {
+      console.warn(`input value is not an integer: ${result}`)
+      return defaultValue
+    }
   } catch (err) {
-    console.debug(err)
-    numberOfNamesToFill = config.defaultNumberOfNamesToFill
+    console.warn('While parsing number of names to fill', err)
+    return defaultValue
   }
-  gameState.setupData = {numberOfNamesToFill}
+  if (result <= 0) {
+    console.warn(`number of names to fill must be a positive number: ${result}`)
+    return defaultValue
+  }
+  return result
+}
+
+const startHandler = async ({gameID, numberOfNamesToFill}) => {
+  const gameState = await getHandler({gameID})
+  if (!validateCanStart(gameState)) {
+    return gameState
+  }
+
+  gameState.setupData = {
+    numberOfNamesToFill: getNumberOfNamesToFill(numberOfNamesToFill)
+  }
   gameState.status = runningStatus
-  const state = InitializeGame({
+  await gameStore.setMetadata(gameID, gameState)
+  await gameStore.setState(gameID, InitializeGame({
     game,
     numPlayers: Object.keys(gameState.players).length,
     setupData: gameState.setupData
-  })
-  await gameStore.setMetadata(gameID, gameState)
-  await gameStore.setState(gameID, state)
+  }))
   await store.set(gameID, gameState)
+
   return gameState
 }
 

@@ -117,7 +117,12 @@ function WaitingRoom(props: WaitingRoomProps) {
         <Button
           mt={1}
           width={1}
-          onClick={() => api.lobby('start', {gameID, numberOfNamesToFill})}
+          onClick={async () => {
+            const response = await api.lobby('start', {gameID, numberOfNamesToFill})
+            if (response.validationMessage) {
+              console.warn(response.validationMessage)
+            }
+          }}
           bg={startDisabled ? 'g1' : 'c5'}
           disabled={startDisabled}
         >
