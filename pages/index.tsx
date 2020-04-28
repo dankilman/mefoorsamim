@@ -1,6 +1,6 @@
 import {Button, Flex, Heading} from 'rebass'
 import {Input} from '@rebass/forms'
-import {Router, useRouter} from 'next/router'
+import {useRouter} from 'next/router'
 import {useState} from 'react'
 import Head from 'next/head'
 
@@ -8,7 +8,7 @@ export default () => {
   const [roomName, setRoomName] = useState('')
   const router = useRouter()
 
-  const goToRoom = () => roomName.trim() && router.push(`/play/${roomName.trim()}`)
+  const goToRoom = () => roomName.trim() && router.push(`/play/${roomName.trim().toLowerCase()}`)
 
   return (
     <Flex

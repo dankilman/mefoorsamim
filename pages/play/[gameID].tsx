@@ -5,17 +5,22 @@ import Head from 'next/head'
 
 export default (props) => {
   const router = useRouter()
-  const gameID = router.query.gameID
+  let gameID = router.query.gameID
   const playerName = router.query.n
   if (!gameID) {
     return <div />
   }
+  let finalGameID: string
+  if (typeof gameID !== 'string') {
+    gameID = gameID[0]
+  }
+  finalGameID = gameID.toLowerCase()
   return (
     <Box>
       <Head>
-        <title>{gameID} | Mefoorsamim</title>
+        <title>{finalGameID} | Mefoorsamim</title>
       </Head>
-      <Lobby gameID={gameID as string} queryPlayerName={playerName as string}/>
+      <Lobby gameID={finalGameID} queryPlayerName={playerName as string}/>
     </Box>
   )
 }

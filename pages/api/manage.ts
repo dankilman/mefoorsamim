@@ -14,6 +14,9 @@ const handlers = {
 
 export default async (req, res) => {
   const body = req.body
+  if (body.gameID) {
+    body.gameID = body.gameID.toLowerCase()
+  }
   const type = body.type
   const result = await handlers[type](body)
   res.status(200).json(result)
