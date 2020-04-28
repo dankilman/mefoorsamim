@@ -11,13 +11,7 @@ interface PairingPhaseProps {
 function PairingPhase(props: PairingPhaseProps) {
   const [currentPairs, setCurrentPairs] = useState([])
   const {gameMetadata, choosePairs, isActive} = props
-  const colors = [
-    'c1',
-    'c2',
-    'c3',
-    'c4',
-    'c5',
-  ]
+  const colors = ['c1', 'c2', 'c3', 'c4', 'c5']
   const players = gameMetadata
   const totalPlayers = players.length
   const shouldPickFirstPairMember = currentPairs.length === 0 || currentPairs[currentPairs.length - 1].length === 2
