@@ -20,8 +20,6 @@ function NamesHeader(props: NamesHeaderProps) {
     >
       {G.order.map((playerID, index) => {
         const player = G.players[playerID]
-        const pairIndex = player.pairIndex
-        const numOfGuesses = (G.pairGuesses[pairIndex] || []).length
         const submittedNames = G.playersThatSubmittedNames.includes(playerID.toString())
         const isCurrent = playerID.toString() === currentPlayer.id.toString()
         const playerColor = player.pairColor
@@ -31,7 +29,6 @@ function NamesHeader(props: NamesHeaderProps) {
         if (phase === 'playing') {
           color = playerColor
           borderColor = isCurrent ? 'black' : color
-          text = `${text} (${numOfGuesses})`
         } else {
           if (submittedNames) {
             color = borderColor = playerColor
@@ -40,6 +37,7 @@ function NamesHeader(props: NamesHeaderProps) {
             borderColor = 'black'
           }
         }
+        const textColor = ['c3', 'c4', 'c5'].includes(color) ? '#fff' : null
         const borderSize = 3
         const sx = {border: `${borderSize}px solid ${borderColor}`}
         return (
@@ -48,6 +46,7 @@ function NamesHeader(props: NamesHeaderProps) {
             alignItems="center"
             key={index}
             sx={sx}
+            color={textColor}
             bg={color}
             p={2}
           >
