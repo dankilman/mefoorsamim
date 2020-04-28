@@ -102,25 +102,29 @@ function WaitingRoom(props: WaitingRoomProps) {
         })}
       </Box>
 
-      <Flex width={1}>
-        <Input
+      <Box width={1} display={canStart ? null : 'none'}>
+        <Flex width={1}>
+          <Input
+            mt={1}
+            placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill})`}
+            disabled={startDisabled}
+            value={numberOfNamesToFill}
+            onChange={e => validatedSetNumberOfNames((e.target as any).value)}
+            onInput={e => validatedSetNumberOfNames((e.target as any).value)}
+          />
+        </Flex>
+
+        <Button
           mt={1}
-          placeholder={`Number Of Names Each Player Needs To Fill (Default ${config.defaultNumberOfNamesToFill}, Enabled When Start Is Enabled)`}
+          width={1}
+          onClick={() => api.lobby('start', {gameID, numberOfNamesToFill})}
+          bg={startDisabled ? 'g1' : 'c5'}
           disabled={startDisabled}
-          value={numberOfNamesToFill}
-          onChange={e => validatedSetNumberOfNames((e.target as any).value)}
-          onInput={e => validatedSetNumberOfNames((e.target as any).value)}
-        />
-      </Flex>
-      <Button
-        mt={1}
-        width={1}
-        onClick={() => api.lobby('start', {gameID, numberOfNamesToFill})}
-        bg={startDisabled ? 'g1' : 'c5'}
-        disabled={startDisabled}
-      >
-        Start
-      </Button>
+        >
+          Start
+        </Button>
+      </Box>
+
     </Flex>
   )
 }

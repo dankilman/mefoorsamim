@@ -196,12 +196,11 @@ function PlayingPhase(props: PlayingPhaseProps) {
   if (isPause) {
     maybeOverlay = (
       <Box
-        mt={10}
         height="100%"
         width="100%"
         css={{
           background: 'rgba(0, 0, 0, 0.8)',
-          position: 'absolute',
+          position: 'fixed',
           left: 0,
           top: 0,
         }}
@@ -209,7 +208,7 @@ function PlayingPhase(props: PlayingPhaseProps) {
     )
   }
   return (
-    <Box width={1} css={{position: 'relative'}}>
+    <Box width={1}>
       <Header G={G} ctx={ctx} isActive={isActive} moves={moves} stage={stage} />
       {maybeOverlay}
       <Body G={G} isActive={isActive} playerID={playerID} moves={moves} stage={stage} playingStage={playingStage}/>
