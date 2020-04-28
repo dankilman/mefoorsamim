@@ -212,6 +212,7 @@ function Lobby(props: LobbyProps) {
         mr={1}
         onClick={() => setShowHelpModal(true)}
         bg="c5"
+        css={{zIndex: 2}}
       >
         ?
       </Button>
@@ -226,7 +227,8 @@ function Lobby(props: LobbyProps) {
             height: '270px',
             margin: '0 auto',
             backgroundColor: '#f8f9fa',
-          }
+          },
+          overlay: {zIndex: 3}
         }}
       >
         <Flex width={1} flexWrap="wrap">
