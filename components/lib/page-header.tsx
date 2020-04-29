@@ -98,7 +98,8 @@ function PageHeader(props: PageHeaderProps) {
             height: '110px',
             margin: '0 auto',
             backgroundColor: '#f8f9fa',
-          }
+          },
+          overlay: {zIndex: 3}
         }}
       >
         <Flex width={1} flexWrap="wrap">
