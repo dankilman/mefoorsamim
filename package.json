@@ -24,7 +24,7 @@
     "react-modal": "^3.11.2",
     "rebass": "^4.0.7",
     "timesync": "^1.0.5",
-    "validator": "^13.0.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/node": "^13.11.1",
